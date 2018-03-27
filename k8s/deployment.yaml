@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  nginx.conf: |
+    events {
+      worker_connections  1024;
+    }
+
+    http {
+    
+      client_max_body_size 100M;
+
+      # remove from cache if not accessed for a month
+      proxy_cache_path /tmp levels=1:2 keys_zone=my_cache:10m max_size=3g inactive=43200m use_temp_path=off; 
+
+      server {
+          proxy_cache my_cache;
+
+          location / {
+            proxy_cache_valid 200 525600m;  # 1 year
+            proxy_pass http://localhost:8080;
+            add_header Cache-Control "max-age=31536000, public, s-maxage=31536000";
+          }
+      }
+
+    }
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: kanvas
+spec:
+  selector:
+    matchLabels:
+      app: kanvas
+  replicas: $REPLICAS 
+  template: 
+    metadata:
+      labels:
+        app: kanvas
+        timestamp: "$TIMESTAMP"
+    spec:
+      containers:
+      - name: kanvas
+        image: demo:$TAG
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        livenessProbe: 
+          httpGet:
+            path: /health
+            port: 8080
+          timeoutSeconds: 5
+          periodSeconds: 30
+          initialDelaySeconds: 10
+        readinessProbe: 
+          httpGet:
+            path: /health
+            port: 8080
+          timeoutSeconds: 5
+          periodSeconds: 30
+          initialDelaySeconds: 10
+        env:
+        - name: "SPRING_CLOUD_CONFIG_URI"
+          value: "http://compass:8888"
+        - name: "SPRING_PROFILES_ACTIVE"
+          valueFrom:
+          value: default,$ENV
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: /etc/nginx
+            name: nginx-config
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+          items:
+          - key: nginx.conf
+            path: nginx.conf
+      imagePullSecrets:
+      - name: regsecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:iam::392867588173:server-certificate/cloudfront/demo"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+  name: kanvas
+  labels:
+    app: kanvas
+spec:
+  type: LoadBalancer
+  ports:
+    - name: "http"
+      port: 80
+      targetPort: 80
+      protocol: "TCP"
+    - name: "https"
+      port: 443
+      targetPort: 80
+      protocol: "TCP"
+  selector:
+    app: demo

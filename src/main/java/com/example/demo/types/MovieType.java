@@ -37,7 +37,7 @@ public class MovieType implements TypeBuilder {
                 .field(Fields.field("rating").type(Scalars.GraphQLInt))
                 .field(Fields.stringField("imageUrl"))
                 .field(Fields.stringField("playback"))
-                .field(Fields.stringField("cast")
+                .field(Fields.field("cast")
                         .type(Types.list(ActorType.REF))
                         .dataFetcher(env -> {
                             Movie movie = env.getSource();

@@ -17,10 +17,7 @@ INSERT INTO genres(id, name, movie_id)
 VALUES ('2', 'crime', '1');
 
 INSERT INTO genres(id, name, movie_id)
-VALUES ('3', 'thriller', '1');
+VALUES ('3', 'action', '2');
 
 INSERT INTO genres(id, name, movie_id)
-VALUES ('4', 'crime', '2');
-
-INSERT INTO genres(id, name, movie_id)
-VALUES ('5', 'thriller', '2');
+VALUES ('4', 'thriller', '2');

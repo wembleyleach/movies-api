@@ -1,5 +1,8 @@
 package com.example.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,17 +10,20 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "movies")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie {
     @Id
     private String id;
 
     private String title;
 
+    @JsonProperty(value = "overview")
     private String synopsis;
 
     private String duration;
 
     @Column(name = "image_url")
+    @JsonProperty(value = "backdrop_path")
     private String imageUrl;
 
     private Integer rating;
