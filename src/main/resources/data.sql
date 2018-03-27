@@ -6,3 +6,18 @@ VALUES ('1', '1', 'Uma Thurman', 'The Bride');
 
 INSERT INTO actors(id, movie_id, name, role)
 VALUES ('2', '1', 'Lucy Liu', 'O-Ren Ishii');
+
+INSERT INTO genres(id, name, movie_id)
+VALUES ('1', 'action', '1');
+
+INSERT INTO genres(id, name, movie_id)
+VALUES ('2', 'crime', '1');
+
+INSERT INTO genres(id, name, movie_id)
+VALUES ('3', 'thriller', '1');
+
+INSERT INTO genres(id, name, movie_id)
+VALUES ('4', 'crime', '2');
+
+INSERT INTO genres(id, name, movie_id)
+VALUES ('5', 'thriller', '2');

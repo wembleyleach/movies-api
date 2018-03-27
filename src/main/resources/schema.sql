@@ -14,3 +14,10 @@ CREATE TABLE IF NOT EXISTS actors (
   movie_id VARCHAR(64),
   FOREIGN KEY (movie_id) REFERENCES movies (id)
 );
+
+CREATE TABLE IF NOT EXISTS genres (
+  id       VARCHAR(64) NOT NULL,
+  name     TEXT,
+  movie_id VARCHAR(64),
+  FOREIGN KEY (movie_id) REFERENCES movies (id)
+);

@@ -5,16 +5,23 @@ import com.creactiviti.spring.boot.starter.graphql.TypeBuilder;
 import com.creactiviti.spring.boot.starter.graphql.Types;
 import com.example.demo.repositories.ActorsRepository;
 import com.example.demo.entities.Movie;
+import com.example.demo.repositories.GenreRepository;
+import com.example.demo.repositories.MoviesRepository;
 import graphql.Scalars;
 import graphql.schema.GraphQLType;
 import graphql.schema.GraphQLTypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+
 @Component
 public class MovieType implements TypeBuilder {
     @Autowired
     private ActorsRepository actorsRepository;
+
+    @Autowired
+    private GenreRepository genreRepository;
 
     public static final String NAME = "Movie";
     public static final GraphQLTypeReference REF = Types.ref(NAME);
@@ -34,6 +41,12 @@ public class MovieType implements TypeBuilder {
                         .dataFetcher(env -> {
                             Movie movie = env.getSource();
                             return actorsRepository.findByMovieId(movie.getId());
+                        }))
+                .field(Fields.stringField("genres")
+                        .type(Types.list(GenreType.REF))
+                        .dataFetcher(env -> {
+                            Movie movie = env.getSource();
+                            return genreRepository.findByMovieId(movie.getId());
                         }))
                 .build();
     }
