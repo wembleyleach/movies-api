@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS movies (
   synopsis  TEXT,
   duration  TEXT,
   image_url TEXT,
-  rating    INT DEFAULT 5
+  rating    INT DEFAULT 5,
+  playback  TEXT
 );
 
 CREATE TABLE IF NOT EXISTS actors (

@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -16,20 +17,24 @@ public class Movie {
 
     private String duration;
 
+    @Column(name = "image_url")
     private String imageUrl;
 
     private Integer rating;
 
+    private String playback;
+
     public Movie() {
     }
 
-    public Movie(String id, String title, String synopsis, String duration, String imageUrl, Integer rating) {
+    public Movie(String id, String title, String synopsis, String duration, String imageUrl, Integer rating, String playback) {
         this.id = id;
         this.title = title;
         this.synopsis = synopsis;
         this.duration = duration;
         this.imageUrl = imageUrl;
         this.rating = rating;
+        this.playback = playback;
     }
 
     public String getSynopsis() {
@@ -78,5 +83,13 @@ public class Movie {
 
     public void setRating(Integer rating) {
         this.rating = rating;
+    }
+
+    public String getPlayback() {
+        return playback;
+    }
+
+    public void setPlayback(String playback) {
+        this.playback = playback;
     }
 }

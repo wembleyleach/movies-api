@@ -29,6 +29,7 @@ public class AddMovie implements MutationBuilder {
                 .argument(Arguments.stringArgument("duration"))
                 .argument(Arguments.stringArgument("image_url"))
                 .argument(GraphQLArgument.newArgument().name("rating").type(Scalars.GraphQLInt))
+                .argument(Arguments.stringArgument("playback"))
                 .type(MovieType.REF)
                 .dataFetcher(env -> {
                     Movie movie = new Movie(UUID.randomUUID().toString(),
@@ -36,7 +37,8 @@ public class AddMovie implements MutationBuilder {
                             env.getArgument("synopsis"),
                             env.getArgument("duration"),
                             env.getArgument("image_url"),
-                            env.getArgument("rating"));
+                            env.getArgument("rating"),
+                            env.getArgument("playback"));
                     return moviesRepository.save(movie);
                 }));
     }
