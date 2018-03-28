@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mvn clean package && docker build -t movies-api . && docker run --rm -it -p 9200:8080 movies-api
+mvn clean package && docker build -t smithchan/movies-api . && docker run --rm -it -p 9200:8080 smithchan/movies-api
