@@ -48,7 +48,7 @@ public class AddMovie implements MutationBuilder {
                       env.getArgument("playback"));
               movie = moviesRepository.save(movie);
               for (String genre : (List<String>) env.getArgument("genre")) {
-                genreRepository.save(new Genre(movie.getId(), genre));
+                genreRepository.save(new Genre(movie.getId(), genre, UUID.randomUUID().toString()));
               }
               return movie;
             }));
