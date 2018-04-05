@@ -4,7 +4,6 @@ import com.creactiviti.spring.boot.starter.graphql.Fields;
 import com.creactiviti.spring.boot.starter.graphql.QueryBuilder;
 import com.creactiviti.spring.boot.starter.graphql.Types;
 import com.example.demo.repositories.MoviesRepository;
-import com.example.demo.services.TMDb;
 import com.example.demo.types.MovieType;
 import graphql.schema.GraphQLObjectType;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,17 +3,14 @@ package com.example.demo.types;
 import com.creactiviti.spring.boot.starter.graphql.Fields;
 import com.creactiviti.spring.boot.starter.graphql.TypeBuilder;
 import com.creactiviti.spring.boot.starter.graphql.Types;
-import com.example.demo.repositories.ActorsRepository;
 import com.example.demo.entities.Movie;
+import com.example.demo.repositories.ActorsRepository;
 import com.example.demo.repositories.GenreRepository;
-import com.example.demo.repositories.MoviesRepository;
 import graphql.Scalars;
 import graphql.schema.GraphQLType;
 import graphql.schema.GraphQLTypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
 
 @Component
 public class MovieType implements TypeBuilder {
