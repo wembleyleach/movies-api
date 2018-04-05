@@ -1,8 +1,10 @@
 package com.example.demo.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,16 +15,17 @@ public class Genre {
 
   private String name;
 
-  @Column(name = "movie_id")
-  private String movieId;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "movie_id", nullable = false)
+  private Movie movie;
 
   public Genre() {
   }
 
-  public Genre(String movieId, String name, String id) {
+  public Genre(String name, String id, Movie movie) {
     this.id = id;
     this.name = name;
-    this.movieId = movieId;
+    this.movie = movie;
   }
 
   public String getId() {
@@ -41,11 +44,11 @@ public class Genre {
     this.name = name;
   }
 
-  public String getMovieId() {
-    return movieId;
+  public Movie getMovie() {
+    return movie;
   }
 
-  public void setMovieId(String movieId) {
-    this.movieId = movieId;
+  public void setMovie(Movie movie) {
+    this.movie = movie;
   }
 }
